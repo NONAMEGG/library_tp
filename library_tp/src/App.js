@@ -66,6 +66,8 @@ function App() {
         if (localStorage.getItem("account") != null) {
           await setAccount(localStorage.getItem("account"));
           router.navigate("/");
+        } else {
+          router.navigate("/login");
         }
       } catch (err) {
         router.navigate("/login");
