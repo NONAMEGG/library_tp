@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
-import { supabase } from "../../../lib/supabaseClient";
+import { supabase } from "../../lib/supabaseClient";
 
 export default NextAuth({
   providers: [
@@ -10,8 +10,9 @@ export default NextAuth({
           .from("users")
           .select("*")
           .eq("username", credentials.username)
+          .eq("username", cridentials.password)
           .single();
-
+        console.log(data);
         if (error || !data) {
           throw new Error("Invalid credentials");
         }

@@ -1,9 +1,9 @@
-import { useSession } from "next-auth/react";
+import { useSession, SessionProvider } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { supabase } from "./lib/supabaseClient";
 
 const Dashboard = () => {
-  const { data: session } = useSession();
+  const { data: session } = <SessionProvider>useSession()</SessionProvider>;
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
