@@ -10,7 +10,6 @@ const Register = () => {
     const password = e.target.password.value;
     const insertSupabase = async () => {
       try {
-        // Check if username and password are defined
         if (!username || !password) {
           console.error("Username or password is missing");
           return;

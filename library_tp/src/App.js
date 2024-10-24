@@ -1,5 +1,9 @@
 import React, { Suspense, useState, useEffect } from "react";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  useLocation,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 
 const Home = React.lazy(() => import("./pages/home"));
 const Login = React.lazy(() => import("./pages/login"));
@@ -60,6 +64,7 @@ const router = createBrowserRouter([
 
 function App() {
   const [account, setAccount] = useState(null);
+  const pathname = window.location.pathname;
   useEffect(() => {
     const checkFile = async () => {
       try {
@@ -67,14 +72,16 @@ function App() {
           await setAccount(localStorage.getItem("account"));
           router.navigate("/");
         } else {
-          router.navigate("/login");
+          if (pathname !== "/login" && pathname !== "/register") {
+            router.navigate("/login");
+          }
         }
       } catch (err) {
         router.navigate("/login");
       }
     };
     checkFile();
-  }, []);
+  }, [pathname]);
 
   return (
     <>
