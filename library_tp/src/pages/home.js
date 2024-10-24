@@ -2,6 +2,7 @@ import { GetInfo } from "./accounts/account_info.js";
 import { json, Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { supabase } from "./lib/supabaseClient";
+import './home.css';
 
 function Home() {
   const [users, setUsers] = useState([]);
@@ -281,80 +282,107 @@ function Home() {
 
   if (JSON.parse(localStorage.getItem("account")).role == "librarian") {
     return (
-      <>
-        <div> {JSON.parse(localStorage.getItem("account")).username}</div>
-        <div> {JSON.parse(localStorage.getItem("account")).role}</div>
-        <Link className="buttonExit" onClick={(e) => Exit(e)} to="/login">
+      <div className="librarian-container">
+        {/* Информация о пользователе */}
+        <div className="librarian-info">
+          <div className="librarian-username">
+            {JSON.parse(localStorage.getItem("account")).username}
+          </div>
+          <div className="librarian-role">
+            {JSON.parse(localStorage.getItem("account")).role}
+          </div>
+        </div>
+  
+        {/* Кнопка выхода */}
+        <Link className="button-exit" onClick={(e) => Exit(e)} to="/login">
           EXIT
         </Link>
-        <div>
-          <div>
-            <button onClick={() => setShow(!show)}>
+  
+        <div className="librarian-content">
+          {/* Форма добавления книги */}
+          <div className="add-book-section">
+            <button className="toggle-add-book" onClick={() => setShow(!show)}>
               Форма добавления книги
             </button>
-            {show ? (
-              <div>
+  
+            {show && (
+              <div className="add-book-form">
                 <input
                   type="text"
                   name="title"
                   onChange={handleInputChangeOnAddBook}
                   value={bookData.title}
                   placeholder="title"
-                ></input>
+                  className="input-book"
+                />
                 <input
                   type="text"
                   name="author"
                   onChange={handleInputChangeOnAddBook}
                   value={bookData.author}
                   placeholder="author"
-                ></input>
+                  className="input-book"
+                />
                 <input
                   type="text"
                   name="publDate"
                   onChange={handleInputChangeOnAddBook}
                   value={bookData.publDate}
-                  placeholder="publication_year"
-                ></input>
-                <button onClick={AddBook}>Добавить книгу</button>
+                  placeholder="publication year"
+                  className="input-book"
+                />
+                <button className="add-book-button" onClick={AddBook}>
+                  Добавить книгу
+                </button>
               </div>
-            ) : (
-              <></>
             )}
-            <p>Books</p>
-            <div>
+  
+            {/* Список книг */}
+            <p className="book-list-title">Books</p>
+            <div className="book-list">
               <ul>
                 {books?.map((book) => (
-                  <li key={book.id}>{book.title}</li>
+                  <li key={book.id} className="book-item">
+                    {book.title}
+                  </li>
                 ))}
               </ul>
             </div>
           </div>
-          <div>
-            <p>Users</p>
-            <div>
+  
+          {/* Список пользователей и управление ими */}
+          <div className="users-section">
+            <p className="user-list-title">Users</p>
+            <div className="user-list">
               <ul>
                 {users?.map((user) => (
-                  <li key={user.id}>
-                    {user.username}{" "}
-                    {user.id !=
-                    JSON.parse(localStorage.getItem("account")).id ? (
+                  <li key={user.id} className="user-item">
+                    {user.username}
+                    {user.id !== JSON.parse(localStorage.getItem("account")).id ? (
                       <>
-                        <button onClick={() => DeleteUser(user.id)}>
+                        <button
+                          className="delete-user-button"
+                          onClick={() => DeleteUser(user.id)}
+                        >
                           Delete
-                        </button>{" "}
+                        </button>
                         <input
                           type="text"
                           name="book_id"
                           placeholder="id of the book"
                           value={bookIds[user.id] || ""}
                           onChange={(e) => handleInputChange(user.id, e)}
+                          className="input-book-id"
                         />
-                        <button onClick={() => GiveAbook(user.id)}>
+                        <button
+                          className="give-book-button"
+                          onClick={() => GiveAbook(user.id)}
+                        >
                           Give a Book
                         </button>
-                        <ul>
+                        <ul className="user-books-list">
                           {eachuserBooks[user.id]?.map((book) => (
-                            <li key={book.book_id}>
+                            <li key={book.book_id} className="user-book-item">
                               {books[book.book_id]?.title}
                             </li>
                           ))}
@@ -369,26 +397,40 @@ function Home() {
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   }
+  
 
   return (
-    <>
-      <div> {JSON.parse(localStorage.getItem("account")).username}</div>
-      <div> {JSON.parse(localStorage.getItem("account")).role}</div>
-      <div>
-        <p>My Books</p>
-        <ul>
+    <div className="customer-container">
+      {/* Отображение имени пользователя */}
+      <div className="customer-username">
+        {JSON.parse(localStorage.getItem("account")).username}
+      </div>
+  
+      {/* Отображение роли пользователя */}
+      <div className="customer-role">
+        {JSON.parse(localStorage.getItem("account")).role}
+      </div>
+  
+      {/* Секция книг */}
+      <div className="books-section">
+        <p className="my-books-title">My Books</p>
+        <ul className="books-list">
           {userBooks?.map((book) => (
-            <li>{book.title}</li>
+            <li className="book-item" key={book.title}>
+              {book.title}
+            </li>
           ))}
         </ul>
       </div>
-      <Link className="buttonExit" onClick={(e) => Exit(e)} to="/login">
+  
+      {/* Кнопка выхода */}
+      <Link className="button-exit" onClick={(e) => Exit(e)} to="/login">
         EXIT
       </Link>
-    </>
+    </div>
   );
 }
 

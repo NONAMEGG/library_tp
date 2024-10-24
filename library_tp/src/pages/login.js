@@ -2,26 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "./lib/supabaseClient";
 import { signIn } from "next-auth/react";
+import './login.css';
 
 const Login = () => {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
-    //   const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     const username = e.target.username.value;
-    //     const password = e.target.password.value;
-
-    //     const result = await signIn("credentials", {
-    //       redirect: false,
-    //       username,
-    //       password,
-    //     });
-
-    //     if (result.error) {
-    //       console.log("Failed login");
-    //       return;
-    //     } else {
-    //     }
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
@@ -37,7 +22,7 @@ const Login = () => {
           console.error("Error fetching data:", error);
           return;
         }
-        if (data.length == 0) {
+        if (data.length === 0) {
           console.log("No such user or wrong password");
         } else {
           console.log("login successful");
@@ -57,11 +42,14 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input name="username" placeholder="Username" />
-      <input type="password" name="password" placeholder="Password" />
-      <button type="submit">Login</button>
-    </form>
+    <div className="login-container">
+      <form onSubmit={handleSubmit} className="login-form">
+        <h1>Авторизация</h1>
+        <input name="username" placeholder="Username" />
+        <input type="password" name="password" placeholder="Password" />
+        <button type="submit">Авторизация</button>
+      </form>
+    </div>
   );
 };
 

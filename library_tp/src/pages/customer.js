@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
+import './customer.css';
 
 const CustomerPage = () => {
   const { data: session } = useSession();

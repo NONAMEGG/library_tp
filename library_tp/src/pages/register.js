@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "./lib/supabaseClient";
+import './login.css';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -8,6 +9,7 @@ const Register = () => {
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
+
     const insertSupabase = async () => {
       try {
         if (!username || !password) {
@@ -52,11 +54,14 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input name="username" placeholder="Username" />
-      <input type="password" name="password" placeholder="Password" />
-      <button type="submit">Register</button>
-    </form>
+    <div className="login-container">
+      <form onSubmit={handleSubmit} className="login-form">
+        <h1>Регистрация</h1>
+        <input name="username" placeholder="Username" />
+        <input type="password" name="password" placeholder="Password" />
+        <button type="submit">Зарегистрироваться</button>
+      </form>
+    </div>
   );
 };
 
