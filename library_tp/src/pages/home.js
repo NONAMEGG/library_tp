@@ -152,6 +152,30 @@ function Home() {
     // insertSupabase();
   };
 
+  const DeleteBook = async (book_id) => {
+    const { data, error } = await supabase
+      .from("books")
+      .select()
+      .eq("id", book_id);
+    if (error) {
+      console.error("Error fetching data:", error);
+      return;
+    }
+    if (data.length == 0) {
+      console.log("book does not exist");
+      return;
+    }
+    const { deletionerror } = await supabase
+      .from("books")
+      .delete()
+      .eq("id", book_id);
+    if (deletionerror) {
+      console.error("Error deleting data:", deletionerror);
+      return;
+    }
+    console.log("deleted successfully");
+  };
+
   const AddBook = async () => {
     console.log(bookData.title);
     console.log(bookData.author);
@@ -170,7 +194,13 @@ function Home() {
       title: bookData.title,
       author: bookData.author,
       public_year: parseInt(bookData.publDate, 10),
-      num_in_stock: 1000,
+      num_in_stock: parseInt(bookData.numInStock, 10),
+    });
+    setBookData({
+      title: "",
+      author: "",
+      publDate: "",
+      numInStock: "",
     });
     if (addError) {
       console.error("Error inserting data:", addError);
@@ -331,6 +361,13 @@ function Home() {
                   placeholder="publication year"
                   className="input-book"
                 />
+                <input
+                  type="text"
+                  name="numInStock"
+                  onChange={handleInputChangeOnAddBook}
+                  value={bookData.numInStock}
+                  placeholder="num_in_stock"
+                ></input>
                 <button className="add-book-button" onClick={AddBook}>
                   Добавить книгу
                 </button>
@@ -343,7 +380,10 @@ function Home() {
               <ul>
                 {books?.map((book) => (
                   <li key={book.id} className="book-item">
-                    {book.title}
+                    {book.id} {book.title}
+                    <button onClick={() => DeleteBook(book.id)}>
+                      Delete book
+                    </button>
                   </li>
                 ))}
               </ul>
