@@ -78,15 +78,17 @@ function App() {
     const checkFile = async () => {
       try {
         const account = localStorage.getItem("account");
-        if (account) {
-          setAccount(account);
-          // Проверка на наличие роли
-          router.navigate(account.role === "admin" ? "/admin" : "/admin");
-        } else {
-          if (pathname !== "/login" && pathname !== "/register") {
-            router.navigate("/login");
-          }
+        setAccount(account);
+
+        switch (account.role) {
+          case "admin":
+            router.navigate("/admin");
+            break;
+          case "librarian":
+            router.navigate("/librarian");
+            break;
         }
+
       } catch (err) {
         console.error(err);
         router.navigate("/login");
