@@ -11,6 +11,7 @@ const Dashboard = React.lazy(() => import("./pages/dashboard"));
 const Register = React.lazy(() => import("./pages/register"));
 const Error = React.lazy(() => import("./pages/error"));
 const Root = React.lazy(() => import("./components/root"));
+const AdminPanel = React.lazy(() => import("./components/AdminPanel"));
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,14 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "/admin",
+        element: (
+          <Suspense fallback={<div>loading////</div>}>
+            <AdminPanel />
+          </Suspense>
+        ),
+      },
     ],
   },
 ]);
@@ -68,15 +77,18 @@ function App() {
   useEffect(() => {
     const checkFile = async () => {
       try {
-        if (localStorage.getItem("account") != null) {
-          await setAccount(localStorage.getItem("account"));
-          router.navigate("/");
+        const account = localStorage.getItem("account");
+        if (account) {
+          setAccount(account);
+          // Проверка на наличие роли
+          router.navigate(account.role === "admin" ? "/admin" : "/admin");
         } else {
           if (pathname !== "/login" && pathname !== "/register") {
             router.navigate("/login");
           }
         }
       } catch (err) {
+        console.error(err);
         router.navigate("/login");
       }
     };

@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+    text-align: center; /* Центрирование заголовка */
+}
+
+.admin-form {
+    display: flex; /* Flex для центрирования элементов */
+    flex-direction: column; /* Вертикальное направление */
+    align-items: center; /* Центрирование по горизонтали */
+    margin-bottom: 20px; /* Отступ между формами */
+    padding: 20px; /* Отступы внутри формы */
+    border-radius: 10px; /* Округлые края */
+    background-color: white; /* Цвет фона формы */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Тень для формы */
+}
+
+input, select {
+    margin: 5px 0;
+    padding: 10px;
+    width: 250px; /* Ширина полей */
+    border: 1px solid #ccc;
+    border-radius: 5px; /* Округление краев полей */
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px; /* Отступ сверху для кнопки */
+    border-radius: 5px; /* Округление краев кнопок */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+h2 {
+    margin-top: 20px; /* Отступ сверху для заголовка списка пользователей */
+    text-align: center; /* Центрирование заголовка */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    width: 100%; /* Задаем ширину для списка */
+}
+
+li {
+    padding: 10px 0; /* Увеличение вертикального отступа */
+    border-bottom: 1px solid #ddd;
+    display: flex; /* Flex для выравнивания содержимого */
+    justify-content: space-between; /* Разделяет элементы по краям */
+    align-items: center; /* Выравнивание по вертикали */
+}
+
+.user-item {
+    padding: 10px 20px; /* Увеличение отступа от начала строки */
+}
+
+.user-actions, .edit-buttons { /* Объединение стилей для user-actions и edit-buttons */
+    display: flex; /* Flex для кнопок */
+    gap: 10px; /* Расстояние между кнопками */
+    justify-content: center; /* Центрирование кнопок */
+    align-items: center; /* Выравнивание по вертикали */
+}
+
+.admin-role {
+    background-color: rgba(255, 239, 59, 0.73); /* Цвет для выделения */
+}
+
+.user-actions button, .edit-buttons button {
+    margin: 0; /* Убираем дополнительные отступы */
+    display: inline-block; /* Чтобы сохранить их в одной строке */
+}
