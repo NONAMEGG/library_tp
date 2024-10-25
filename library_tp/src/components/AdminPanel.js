@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../pages/lib/supabaseClient.js";
-import '../admin.css';
+import './admin.css';
 
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);

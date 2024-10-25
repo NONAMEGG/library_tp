@@ -3,6 +3,7 @@ import { json, Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { supabase } from "./lib/supabaseClient";
 import './home.css';
+import AdminPanel from "../components/AdminPanel";
 
 function Home() {
   const [users, setUsers] = useState([]);
@@ -11,6 +12,8 @@ function Home() {
   const [eachuserBooks, setEachUserBooks] = useState({});
   const [bookIds, setBookIds] = useState({});
   const [show, setShow] = useState(false);
+  const [userRole, setUserRole] = useState(""); // Хранит роль текущего пользователя
+
   const handleInputChange = (userId, event) => {
     setBookIds((prev) => ({
       ...prev,
@@ -29,6 +32,14 @@ function Home() {
   };
 
   useEffect(() => {
+        const fetchUserRole = () => {
+      const info = JSON.parse(localStorage.getItem("account"));
+      if (info && info.role) {
+        setUserRole(info.role);
+      }
+    };
+    fetchUserRole();
+
     const fetchUsers = async () => {
       try {
         const { data, error } = await supabase.from("users").select();
@@ -272,6 +283,14 @@ function Home() {
 
   const [userBooks, setUserBooks] = useState([]);
   useEffect(() => {
+        const fetchUserRole = () => {
+      const info = JSON.parse(localStorage.getItem("account"));
+      if (info && info.role) {
+        setUserRole(info.role);
+      }
+    };
+    fetchUserRole();
+
     const fetchUserBooks = async () => {
       try {
         const fetchUserBooksSupabase = async () => {
@@ -310,7 +329,9 @@ function Home() {
     return () => clearInterval(intervalId);
   }, []);
 
-  if (JSON.parse(localStorage.getItem("account")).role == "librarian") {
+  if (userRole === "admin") {
+    return <AdminPanel />;
+  } else if (userRole === "librarian") {
     return (
       <div className="librarian-container">
         {/* Информация о пользователе */}
