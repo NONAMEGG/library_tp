@@ -380,8 +380,8 @@ function Home() {
               <ul>
                 {books?.map((book) => (
                   <li key={book.id} className="book-item">
-                    {book.id} {book.title}
-                    <button onClick={() => DeleteBook(book.id)}>
+                    <p>:{book.id} {book.title}</p>
+                    <button className="delete-book-button" onClick={() => DeleteBook(book.id)}>
                       Delete book
                     </button>
                   </li>

@@ -96,6 +96,7 @@
     margin: 20px 0;
 }
 
+
 .book-list ul {
     list-style-type: none;
     padding: 0;
@@ -106,6 +107,10 @@
     background-color: #fff;
     margin: 5px 0;
     border-radius: 5px;
+    width: 200px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -133,6 +138,19 @@
     margin: 5px;
 }
 
+.delete-book-button {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.delete-book-button:hover {
+    background-color: #c82333; 
+}
 
 .give-book-button {
     background-color: #007bff;
